@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block posts %}
+
+<div class="container wrapper">
+    {% for p in page_obj %}
+        <div class="posts">
+            <div class="avatar_post">
+                {% if user.is_authenticated %}
+                    {% if p.avatar %}
+                        <img src="{{ p.avatar }}" alt="avatar">
+                    {% else %}
+                        <img src="{% static 'images/avatar.png' %}" alt="avatar">
+                    {% endif %}
+                    <h1><a href="{% url 'profile' p.user_id %}">{{ p.fullname }}</a></h1>
+                {% else %}
+                    <img src="{% static 'images/avatar.png' %}" alt="avatar">
+                    <h1>Author</h1>
+                {% endif %}
+            </div>
+
+                <div id="carousel{{ p.user_id }}{{ p.post_id }}" class="carousel slide">
+                    <div class="carousel-indicators">
+                      {% for image in p.images %}
+                        {% if forloop.counter0 == 0 %}
+                            <button type="button" data-bs-target="#carousel{{ p.user_id }}{{ p.post_id }}"
+                                    data-bs-slide-to="{{ forloop.counter0 }}" class="active" aria-current="true"
+                                    aria-label="Slide {{ forloop.counter }}">
+                            </button>
+                        {% else %}
+                            <button type="button" data-bs-target="#carousel{{ p.user_id }}{{ p.post_id }}"
+                                    data-bs-slide-to="{{ forloop.counter0 }}" aria-label="Slide {{ forloop.counter }}">
+                            </button>
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+
+                    <div class="carousel-inner">
+                      {% for image in p.images %}
+                        <div class="carousel-item {% if forloop.counter == 1 %}active{% endif %}">
+                            <img class="card-img-top" src="{{ image }}" alt="...">
+                        </div>
+                      {% endfor %}
+                    </div>
+
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ p.user_id }}{{ p.post_id }}" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carousel{{ p.user_id }}{{ p.post_id }}" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+
+            <p>{{ p.body }}</p>
+
+            {% for tag in p.tags %}
+                <p>{{ tag }}</p>
+
+            {% endfor %}
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'like' p.post_id %}?url={{ request.get_full_path }}">Likes: {{ p.likes_count }}</a>
+            {% endif %}
+
+
+        </div>
+    {% endfor %}
+</div>
+        <div class="pagin">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+
+{% endblock %}

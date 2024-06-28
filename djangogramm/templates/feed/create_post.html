@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form action="" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    {{ image_formset.management_form }}
+
+    {{ image_formset.as_p }}
+
+    {{ post_form.as_p }}
+
+    <input type="submit" value="Submit">
+</form>
+
+{% endblock %}

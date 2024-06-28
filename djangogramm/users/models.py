@@ -1,0 +1,48 @@
+from django.db.models import EmailField, CharField, TextField, ImageField, BooleanField
+from django.contrib.auth.models import AbstractUser, BaseUserManager
+from djangogramm.helpers import image_handler
+from djangogramm.settings import AVATAR_THUMBNAIL_SIZE
+
+
+class CustomUserManager(BaseUserManager):
+    def create_user(self, email: str, password: str = None, **extra_fields):
+        if not email:
+            raise ValueError('The Email field must be set')
+        user = self.model(email=self.normalize_email(email), **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email: str, password: str = None):
+        if not email:
+            raise ValueError("Admin requires an Email")
+        user = self.model(
+            email=self.normalize_email(email),
+            is_staff=True,
+            is_superuser=True,
+            is_active=True,
+            activation_link='superuser',
+        )
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+
+class CustomUser(AbstractUser):
+    username = None
+    email = EmailField(max_length=50, unique=True)
+    activation_link = CharField(max_length=36)
+    bio = TextField(max_length=250, blank=True)
+    avatar = ImageField(upload_to="avatars/", blank=True)
+    is_active = BooleanField(default=False)
+    objects = CustomUserManager()
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
+    def __str__(self):
+        return " ".join([self.first_name, self.last_name])
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if self.avatar:
+            image_handler(path=self.avatar.path, size=AVATAR_THUMBNAIL_SIZE)

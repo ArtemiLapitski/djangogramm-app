@@ -1,0 +1,36 @@
+.posts {
+    text-align: center;
+    padding-bottom: 100px;
+}
+
+.pagin {
+    text-align: center;
+    bottom: 0;
+}
+
+.profile {
+    text-align: center;
+}
+
+.avatar_post img {
+  vertical-align: middle;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.avatar_profile {
+  vertical-align: middle;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.wrapper {
+  width: 600px;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}

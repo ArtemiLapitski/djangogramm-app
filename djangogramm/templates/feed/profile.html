@@ -1,0 +1,16 @@
+{% extends 'base_posts.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="profile">
+        {% if avatar %}
+            <img src="{{ avatar }}" alt="avatar" class="avatar_profile">
+        {% else %}
+            <img src="{% static 'images/avatar.png' %}" alt="avatar" class="avatar_profile">
+        {% endif %}
+
+        <h1>{{ fullname }}</h1>
+        <p1>{{ bio }}</p1>
+    </div>
+    <hr>
+{% endblock %}
