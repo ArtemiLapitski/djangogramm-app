@@ -1,6 +1,7 @@
 ## Web framework: Django
 
-Instagram like application with web interface based on Django and SQLite database.
+Instagram like application with web interface based on Django and SQLite database. 
+The app is currently deployed at http://16.171.154.32:8000/.
 
 ## Description:
 
