@@ -2,8 +2,9 @@
 
 Instagram like application with web interface based on Django and SQLite database. 
 AWS S3 along with AWS Lambda services are used to store and process images.
-Also, there are Single-Page Application (SPA) elements added to the project, namely 'Like' and 'Follow' buttons are 
+There are Single-Page Application (SPA) elements added to the project, namely 'Like' and 'Follow' buttons are 
 updated dynamically using AJAX.
+Webpack is used to bundle front-end dependencies.
 Users are able to log in via third-party services like Google or Github.
 The app is currently deployed at http://djangogramm.online/
 
@@ -11,8 +12,8 @@ The app is currently deployed at http://djangogramm.online/
 
 The user can register on the website by email or via third-party services like Google or Github.
 After basic registration using email, the user will receive an email with unique link to activate the account. 
-The user who goes by the link will be redirected to the activation page to add full name, bio and avatar. 
-Next, user can create posts with images, follow other users, see posts of other users via feed of the latest posts. 
+The user who goes by the link will be redirected to the activation page to add full name, password, bio and avatar. 
+Next, user can create posts with images, follow other users, see posts of people you follow via feed of the latest posts. 
 Unauthorized guests cannot view the profiles, fullname and avatars of users. Each post may have multiple images and tags. 
 Users may also like/unlike posts and request password change.
 
@@ -40,6 +41,11 @@ Install python requirements:
 ```
 pip install -r requirements.txt
 ```
+
+Configure AWS S3 bucket and AWS Lambda for image storage and processing, as well as storage of static files. 
+Useful resources for AWS Lambda configuration are located here in project directory: /djangogramm/djangogramm/aws_resource/
+
+Configure your Google and Github to allow djangogramm to login via these third-party services.
 
 Create the file .env.  Use .env.example file as an example.
 
