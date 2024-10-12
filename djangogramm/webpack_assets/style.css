@@ -1,0 +1,199 @@
+.profile-card {
+    width: 600px;
+    border: 1px solid #000000;
+    border-radius: 10px;
+    margin: 0 auto;
+    margin-bottom: 30px;
+    margin-top: 25px;
+    display: flex;
+}
+
+ /*start of margin for profile columns */
+
+.profile-card__1-col,
+.profile-card__2-col {
+    margin: 15px;
+
+}
+
+.profile-card__1-col {
+    margin-left: 80px;
+    margin-right: 30px;
+    align-self: center;
+}
+
+.profile-card__2-col {
+    margin-right: 80px;
+    display: flex;
+    justify-content: space-between;
+}
+ /*end of margin for profile columns */
+
+ /*start 1 profile column */
+.profile-card__1-col-follow_button {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.profile-card__1-col-avatar img {
+    vertical-align: middle;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+ /*end 1 profile column */
+
+
+ /*start 2 profile column */
+
+.profile-card__2-col {
+    flex-grow: 2;
+    flex-direction: column;
+}
+
+.profile-card__2-col__fullname,
+.profile-card__2-col__bio {
+    display: flex;
+    justify-content: center;
+}
+
+.profile-card__2-col__fullname {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+
+.profile-card__2-col__stats {
+    display: flex;
+    justify-content: space-around;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.profile-card__2-col__stats__posts__value,
+.profile-card__2-col__stats__followers__value,
+.profile-card__2-col__stats__following__value {
+    display: flex;
+    justify-content: center;
+}
+
+ /*end 2 profile column */
+
+.btn {
+  --bs-btn-font-size: 0.75rem;
+  --bs-btn-padding-x: .9rem;
+}
+
+ /*posts start */
+
+.posts-container {
+    width: 600px;
+    margin: 0 auto;
+    margin-top: 25px;
+}
+
+.instacard {
+    border: 1px solid #000000;
+    border-radius: 25px;
+    margin-bottom: 50px;
+}
+
+.instacard__header-avatar img {
+  vertical-align: middle;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  float: left;
+}
+
+.instacard__header {
+    font-size: 26px;
+    height: 70px;
+    padding: 15px;
+    padding-left: 20px;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.instacard__header-fullname {
+    float: left;
+    margin-top: 0.1rem;
+    margin-left: 0.7rem;
+}
+
+#like_button {
+    padding: 0;
+    width: auto;
+    height: auto;
+    border: none;
+    background: none
+}
+
+.instacard__likes-action img {
+  width: 30px;
+  height: 25px;
+}
+
+.instacard__likes-counter {
+    font-weight: 600;
+}
+
+.instacard__likes-action,
+.instacard__likes-counter,
+.instacard__body,
+.instacard__tags {
+    padding-left: 20px;
+    padding-top: 10px;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.pagin {
+    text-align: center;
+    bottom: 0;
+}
+
+ /*posts end */
+
+
+.header-forms {
+    font-weight: 400;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.message-wrapper {
+    margin: 30px;
+    text-align: center;
+}
+
+.shadow {
+    width: 600px;
+    margin: 0 auto;
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.social-login-google,
+.social-login-github {
+    margin-top: 10px;
+}
+
+.social-login img {
+  width: 30px;
+  height: 25px;
+  margin-bottom: 3px;
+  margin-right: 5px;
+}
+
+.social-login button,
+.email_signup button {
+  width: 204px;
+}

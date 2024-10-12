@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+  <form action="{% url 'follow' %}" method="post">
+    {% csrf_token %}
+    <button id="follow_button" type="submit" name="author_id" value="{{ author_id }}"
+            class="{% if is_following %}btn btn-outline-secondary btn-sm{% else %}btn btn-primary btn-sm{% endif %}">
+        {% if is_following %}Unfollow{% else %}Follow{% endif %}</button>
+  </form>
+
+</body>
+</html>

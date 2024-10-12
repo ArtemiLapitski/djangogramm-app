@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+{% load custom_tags %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <div class="instacard__likes-action">
+        {% if user.is_authenticated %}
+            <form action="{% url 'like' %}" method="post">
+                {% csrf_token %}
+                <button id="like_button" type="submit" name="post_id" value="{{ p.pk }}">
+                    {% if user.pk in p.like_set.all|get_likes %}
+                        <img src="{% static 'images/liked.png' %}">
+                    {% else %}
+                        <img src="{% static 'images/not_liked.png' %}">
+                    {% endif %}
+                </button>
+            </form>
+        {% else %}
+            <img src="{% static 'images/not_liked.png' %}">
+        {% endif %}
+    </div>
+    <div class="instacard__likes-counter">
+        {% if p.like_set.all|length == 1 %}
+            1 like
+        {% else %}
+            {{ p.like_set.all|length }} likes
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_tags %}
+
+{% block posts %}
+
+<div class="posts-container">
+    {% if page_obj|is_page and page_obj %}
+        {% for p in page_obj %}
+        <div class="instacard">
+            <div class="instacard__header">
+                <span class="instacard__header-avatar">
+                    {% if user.is_authenticated and p.user.avatar %}
+                        <img src="{{ p.user.avatar.url }}">
+                    {% else %}
+                        <img src="{% static 'images/avatar.png' %}">
+                    {% endif %}
+                </span>
+                <span class="instacard__header-fullname">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'profile' p.user.pk %}">{{ p.user.first_name }} {{ p.user.last_name }}</a>
+                    {% else %}
+                        Author
+                    {% endif %}
+                </span>
+            </div>
+
+            <div id="carousel{{ p.user.pk }}{{ p.pk }}" class="carousel slide">
+                <div class="carousel-inner">
+                  {% for image in p.image_set.all %}
+                    <div class="carousel-item {% if forloop.counter == 1 %}active{% endif %}">
+                        <img src="{{ image.image.url }}" width="600" height="800">
+                    </div>
+                  {% endfor %}
+                </div>
+
+                {% if p.image_set.all|length != 1 %}
+                    <div class="carousel-indicators">
+                      {% for image in p.image_set.all %}
+                        {% if forloop.counter0 == 0 %}
+                            <button type="button" data-bs-target="#carousel{{ p.user.pk }}{{ p.pk }}"
+                                    data-bs-slide-to="{{ forloop.counter0 }}" class="active" aria-current="true"
+                                    aria-label="Slide {{ forloop.counter }}">
+                            </button>
+                        {% else %}
+                            <button type="button" data-bs-target="#carousel{{ p.user.pk }}{{ p.pk }}"
+                                    data-bs-slide-to="{{ forloop.counter0 }}" aria-label="Slide {{ forloop.counter }}">
+                            </button>
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ p.user.pk }}{{ p.pk }}" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carousel{{ p.user.pk }}{{ p.pk }}" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                    </button>
+                {% endif %}
+            </div>
+
+            <div class="instacard__likes_{{ p.pk }}">
+                {% include 'ajax_likes.html' %}
+            </div>
+
+            <div class="instacard__body">
+                {{ p.body }}
+            </div>
+
+            <div class="instacard__tags">
+                <p>{{ p.posttag_set.all|get_tags }}</p>
+            </div>
+
+        </div>
+        {% endfor %}
+
+        <div class="pagin">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    {% else %}
+        <div class="message-wrapper">
+            No posts yet
+        </div>
+    {% endif %}
+</div>
+
+<script type="text/javascript">
+
+    $(document).on('click', '#like_button', function(event){
+        event.preventDefault();
+        var post_id = $(this).attr('value');
+
+        $.ajax({
+            type: "POST",
+            url: {% url 'like' %},
+            data: {'post_id': post_id, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+            success: function(response){
+              $('.instacard__likes_'+post_id).html(response)
+              console.log('Successful like request on post_id '+post_id);
+            },
+            error: function(rs, e){
+                console.log(rs.responseText);
+            },
+        });
+    });
+
+</script>
+
+{% endblock %}

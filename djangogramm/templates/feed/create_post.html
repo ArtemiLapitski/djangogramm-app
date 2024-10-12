@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="shadow p-4 mb-5 bg-body rounded">
+
+    <div class="header-forms">
+        Create Post
+    </div>
+
+    <form action="" enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+        {{ image_formset.management_form }}
+
+        {{ image_formset.as_p }}
+
+        {{ post_form.as_p }}
+
+        <input type="submit" value="Create" class="btn btn-primary">
+    </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="shadow p-4 mb-5 bg-body rounded">
+        <div class="header-forms">
+            Finalize Registration
+        </div>
+        <form action="{% url 'activate' activation_link %}" enctype="multipart/form-data" method="post">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <input type="submit" value="Sign up" class="btn btn-primary">
+        </form>
+    </div>
+{% endblock %}

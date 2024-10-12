@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load socialaccount %}
+{% load static %}
+{% block content %}
+
+    <div class="shadow p-4 mb-5 bg-body rounded">
+        <div class="header-forms">
+            Sign Up
+        </div>
+
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <div class="email_signup">
+                <button type="submit" class="btn btn-primary">Sign Up</button>
+            </div>
+
+        </form>
+
+        <div class="social-login">
+
+            <div class="social-login-google">
+                <form action="{% provider_login_url 'google' %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-outline-primary">
+                      <img src="{% static 'images/google_logo.png' %}" />
+                      Sign Up with Google
+                  </button>
+                </form>
+            </div>
+
+            <div class="social-login-github">
+                <form action="{% provider_login_url 'google' %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-outline-primary">
+                      <img src="{% static 'images/github_logo.png' %}" />
+                      Sign Up with GitHub
+                  </button>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}

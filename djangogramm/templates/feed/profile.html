@@ -1,0 +1,69 @@
+{% extends 'base_posts.html' %}
+{% load static %}
+{% load custom_tags %}
+
+{% block content %}
+    <div class="profile-card">
+        <div class="profile-card__1-col">
+            <div class="profile-card__1-col-avatar">
+                {% if page_obj|check_avatar %}
+                    <img src="{{ page_obj|get_avatar }}">
+                {% else %}
+                    <img src="{% static 'images/avatar.png' %}">
+                {% endif %}
+            </div>
+
+            {% if user.pk != author_id %}
+                <div class="profile-card__1-col-follow_button">
+                    {% include 'feed/ajax_follow_button.html' %}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="profile-card__2-col">
+            <div class="profile-card__2-col__fullname"> {{ page_obj|get_fullname }} </div>
+            <div class="profile-card__2-col__bio"> {{ page_obj|get_bio }} </div>
+            <div class="profile-card__2-col__stats">
+
+                <div class="profile-card__2-col__stats__posts">
+                    Posts:
+                    <div class="profile-card__2-col__stats__posts__value"> {{ posts_amount }} </div>
+                </div>
+
+                <div class="profile-card__2-col__stats__followers">
+                    {% include 'feed/ajax_followers_counter.html' %}
+                </div>
+
+                <div class="profile-card__2-col__stats__following">
+                    Following:
+                    <div class="profile-card__2-col__stats__following__value"> {{ followees }} </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+<script type="text/javascript">
+
+    $(document).on('click', '#follow_button', function(event){
+        event.preventDefault();
+        var author_id = $(this).attr('value');
+
+        $.ajax({
+            type: "POST",
+            url: {% url 'follow' %},
+            dataType: 'json',
+            data: {'author_id': author_id, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+            success: function(response){
+              $('.profile-card__1-col-follow_button').html(response['button_html'])
+              $('.profile-card__2-col__stats__followers').html(response['counter_html'])
+              console.log('Successful follow request');
+            },
+            error: function(rs, e){
+                console.log(rs.responseText);
+            },
+        });
+    });
+</script>
+
+{% endblock %}
