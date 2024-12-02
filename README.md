@@ -29,11 +29,6 @@ Open project directory:
 cd djangogramm-app
 ```
 
-Open djangogramm directory:
-```
-cd djangogramm
-```
-
 Create a virtualenv or skip this point.
 Activate virtualenv.
 
@@ -43,7 +38,7 @@ pip install -r requirements.txt
 ```
 
 Configure AWS S3 bucket and AWS Lambda for image storage and processing, as well as storage of static files. 
-Useful resources for AWS Lambda configuration are located here in project directory: /djangogramm/djangogramm/aws_resource/
+Useful resources for AWS Lambda configuration are located here in project directory: /djangogramm/aws_resource/
 
 Configure your Google and Github to allow djangogramm to login via these third-party services.
 
@@ -115,7 +110,7 @@ docker pull new-repo:tagname
 ```
 Run docker image:
 ```
-docker run -it -p 8000:8000 your_image_name
+docker run -it -p 80:8000 your_image_name
 ```
 
 Register on the website or log in using test account:
